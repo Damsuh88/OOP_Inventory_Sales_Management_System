@@ -171,7 +171,7 @@ namespace POSales
         {
             double discount = double.Parse(lblDiscount.Text);
             double sales = double.Parse(lblSaleTotal.Text) - discount;
-            double vat = sales * 0.12;//VAT: 12% of VAT Payable (Output Tax less Input Tax)
+            double vat = sales * 0.08;//Malaysia SST is usually 6% or 8%. Let's use 8% (0.08)
             double vatable = sales - vat;
 
             lblVat.Text = vat.ToString("#,##0.00");
