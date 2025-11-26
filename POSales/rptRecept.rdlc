@@ -681,7 +681,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Vatable</Value>
+                    <Value>Taxable Amt</Value>
                     <Style />
                   </TextRun>
                 </TextRuns>
@@ -710,7 +710,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Vat</Value>
+                    <Value>SST</Value>
                     <Style />
                   </TextRun>
                 </TextRuns>
