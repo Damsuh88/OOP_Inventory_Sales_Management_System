@@ -91,8 +91,8 @@ namespace POSales
                 rptDataSourece = new ReportDataSource("DataSet1", ds.Tables["dtRecept"]);
                 reportViewer1.LocalReport.DataSources.Add(rptDataSourece);
                 reportViewer1.SetDisplayMode(Microsoft.Reporting.WinForms.DisplayMode.PrintLayout);
-                reportViewer1.ZoomMode = ZoomMode.Percent;
-                reportViewer1.ZoomPercent = 30;
+                reportViewer1.ZoomMode = ZoomMode.FullPage;
+                //reportViewer1.ZoomPercent = 30;
 
 
             }

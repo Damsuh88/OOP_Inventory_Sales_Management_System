@@ -343,7 +343,9 @@
     <EmbeddedResource Include="rptSoldItems.rdlc" />
     <EmbeddedResource Include="rptStockInHist.rdlc" />
     <EmbeddedResource Include="rptTopSell.rdlc" />
-    <EmbeddedResource Include="rptRecept.rdlc" />
+    <EmbeddedResource Include="rptRecept.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="rptSoldReport.rdlc" />
     <EmbeddedResource Include="UserProperties.resx">
       <DependentUpon>UserProperties.cs</DependentUpon>
