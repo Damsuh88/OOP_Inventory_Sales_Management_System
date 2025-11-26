@@ -83,44 +83,47 @@ namespace POSales
         {
             try
             {
-                //validation for empty field
-                if(cbAction.Text=="")
+                // Validation for empty fields
+                if (cbAction.Text == "")
                 {
                     MessageBox.Show("Please select action for add or reduce.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     cbAction.Focus();
                     return;
                 }
 
-                if(txtQty.Text=="")
+                if (txtQty.Text == "")
                 {
-                    MessageBox.Show("Please input quantity  for add or reduce.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Please input quantity for add or reduce.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     txtQty.Focus();
                     return;
                 }
 
-                if(txtRemark.Text=="")
+                if (txtRemark.Text == "")
                 {
                     MessageBox.Show("Need reason for stock adjustment.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     txtRemark.Focus();
                     return;
                 }
 
-                //update stock
-                if(int.Parse(txtQty.Text)>_qty)
+                // UPDATE STOCK
+                if (cbAction.Text == "Remove From Inventory")
                 {
-                    MessageBox.Show("Stock on hand quantity should be greater than adjustment quantity.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                if(cbAction.Text=="Remove From Inventory")
-                {
+                    // LOGIC FIX: Only check if we have enough stock when REMOVING items
+                    if (int.Parse(txtQty.Text) > _qty)
+                    {
+                        MessageBox.Show("Stock on hand quantity should be greater than adjustment quantity.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     dbcon.ExecuteQuery("UPDATE tbProduct SET qty = (qty - " + int.Parse(txtQty.Text) + ") WHERE pcode LIKE '" + lblPcode.Text + "'");
                 }
-                else if(cbAction.Text=="Add To Inventory")
+                else if (cbAction.Text == "Add To Inventory")
                 {
                     dbcon.ExecuteQuery("UPDATE tbProduct SET qty = (qty + " + int.Parse(txtQty.Text) + ") WHERE pcode LIKE '" + lblPcode.Text + "'");
                 }
 
-                dbcon.ExecuteQuery("INSERT INTO tbAdjustment(referenceno, pcode, qty, action, remarks, sdate, [user]) VALUES ('"+lblRefNo.Text+ "','" + lblPcode.Text + "','" + int.Parse(txtQty.Text) + "', '" + cbAction.Text + "', '" + txtRemark.Text + "', '" + DateTime.Now.ToShortDateString() + "','" + lblUsername.Text + "')");
+                // CRITICAL FIX: Changed .ToShortDateString() to .ToString("yyyy-MM-dd")
+                dbcon.ExecuteQuery("INSERT INTO tbAdjustment(referenceno, pcode, qty, action, remarks, sdate, [user]) VALUES ('" + lblRefNo.Text + "','" + lblPcode.Text + "','" + int.Parse(txtQty.Text) + "', '" + cbAction.Text + "', '" + txtRemark.Text + "', '" + DateTime.Now.ToString("yyyy-MM-dd") + "','" + lblUsername.Text + "')");
+
                 MessageBox.Show("Stock has been successfully adjusted.", "Process completed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadStock();
                 Clear();
